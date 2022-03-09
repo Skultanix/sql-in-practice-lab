@@ -1,3 +1,6 @@
+require(`dotenv`).config()
+
+
 let nextEmp = 5
 
 module.exports = {
