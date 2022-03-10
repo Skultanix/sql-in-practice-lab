@@ -22,6 +22,16 @@ module.exports = {
             .catch(err => console.log(err))
     },
     
+    getPendingAppointments: (req, res) => {
+        sequelize.query(`
+            SELECT * FROM cc_appointments
+            WHERE approved = false
+            ORDER BY date DESC;
+        `)
+            .then(dbRes => res.status(200).send(dbRes[0]))
+            .catch(err => console.log(err)) 
+    },
+
     getUpcomingAppointments: (req, res) => {
         sequelize.query(`select a.appt_id, a.date, a.service_type, a.approved, a.completed, u.first_name, u.last_name 
         from cc_appointments a
