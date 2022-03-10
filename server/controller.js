@@ -13,6 +13,15 @@ const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
 let nextEmp = 5
 
 module.exports = {
+    getAllClients: (req, res) => {
+        sequelize.query(`
+            SELECT * from cc_clients AS c
+            JOIN cc_users AS u on c.user_id = u.user_id;
+        `)
+            .then(dbRes => res.status(200).send(dbRes[0]))
+            .catch(err => console.log(err))
+    },
+    
     getUpcomingAppointments: (req, res) => {
         sequelize.query(`select a.appt_id, a.date, a.service_type, a.approved, a.completed, u.first_name, u.last_name 
         from cc_appointments a
